@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Wawan Sismadi</title>
-  <link rel="stylesheet" href="https://sismadi.com/style.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="profile-container">
   <div class="header-bg"></div>
 
   <div class="profile-photo-wrapper">
-    <img src="https://sismadi.com/wawansismadi.jpg" alt="Wawan Sismadi" class="profile-photo" />
+    <img src="profile.png" alt="profile" class="profile-photo" />
   </div>
 
   <div class="header-text">
@@ -27,23 +27,77 @@
     <button>Enhance profile</button>
   </div>
 
-  <div class="content-card">
-    <h2>About</h2>
-    <p>Akademisi dan profesional di bidang Teknologi Informasi dengan pengalaman lebih dari 15 tahun dalam pengembangan sistem perangkat lunak, konsultasi TI, dan pendidikan tinggi. Saat ini menjabat sebagai Dosen Informatika di Universitas IPWIJA dan Pendiri PT. Sismadi Langit Solusi, serta aktif sebagai konsultan dalam proyek-proyek transformasi digital di berbagai kementerian, termasuk Kementerian PUPR dan Kementerian Perindustrian.
+  <div id="content"  >
 
-</p><p>Fokus keahlian mencakup pengembangan aplikasi web berbasis framework MVC, Internet of Things (IoT), keamanan informasi (ISO 27001), dan kecerdasan buatan. Komitmen terhadap integrasi antara praktik industri dan pengembangan akademik tercermin dalam aktivitas riset, pengajaran, pelatihan digital, serta publikasi ilmiah. Saat ini tengah menempuh studi Doktor (S3) Informatika guna memperdalam kontribusi dalam bidang sistem cerdas dan arsitektur TI berbasis kebijakan nasional.
-</p>
+
   </div>
 
+
+
   <div class="content-card">
-    <h3>Analytics <small>(private)</small></h3>
+    <h3>Sosial Media <small></small></h3>
     <ul>
-      <li><strong>18</strong> profile views</li>
-      <li><strong>238</strong> post impressions</li>
-      <li><strong>12</strong> search appearances</li>
+      <li><strong>linkedin :</strong> http://linkedin.com/in/sismadi </li>
+      <li><strong>credly :</strong> https://www.credly.com/users/wawan-sismadi</li>
     </ul>
   </div>
 </div>
+
+
+<script type="module">
+// Import Supabase client dari CDN
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+
+const SUPABASE_URL = 'https://zligkbkrxqqbetnwykrq.supabase.co'
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpsaWdrYmtyeHFxYmV0bnd5a3JxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkyNjM2ODUsImV4cCI6MjA2NDgzOTY4NX0.kDK8_c6qCKKRax4HbHwEbAMwTavhDRWdgqkDtjWWYD8'
+
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+// Elemen DOM
+// const addBtn = document.getElementById('addBtn')
+// const dataBody = document.getElementById('dataBody')
+// const crudForm = document.getElementById('crudForm')
+// const recordIdInput = document.getElementById('recordId')
+// const nameInput = document.getElementById('nameInput')
+// const emailInput = document.getElementById('emailInput')
+// const deleteBtn = document.getElementById('deleteBtn')
+// const cancelBtn = document.getElementById('cancelBtn')
+
+const content = document.getElementById('content')
+
+// Fungsi load data ke tabel
+async function loadData() {
+  const { data, error } = await supabase.from('web').select('*').order('id')
+  if (error) {
+    alert('Error loading data: ' + error.message)
+    return
+  }
+  content.innerHTML = ''
+  let  out=``;
+  data.forEach(row => {
+
+    out+=`
+
+    <div class="content-card">
+    <h2>${row.judul}</h2>
+    <p>${row.isi}
+</p>
+
+  </div>
+  `
+
+  })
+  content.innerHTML = out
+
+
+}
+
+ // Load data saat halaman siap
+window.addEventListener('DOMContentLoaded', loadData)
+
+</script>
 
 
 
